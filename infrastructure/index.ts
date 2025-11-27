@@ -70,6 +70,27 @@ const prefix = timestamp;
 
 const objects = uploadFiles(bucket, prefix);
 
+const oai = new aws.cloudfront.OriginAccessIdentity("oai");
+
+new aws.s3.BucketPolicy("bucketPolicy", {
+  bucket: bucket.id,
+  policy: pulumi.all([oai.iamArn, bucket.arn]).apply(([oaiArn, bucketArn]) =>
+    JSON.stringify({
+      Version: "2012-10-17",
+      Statement: [
+        {
+          Effect: "Allow",
+          Principal: {
+            AWS: oaiArn,
+          },
+          Action: "s3:GetObject",
+          Resource: `${bucketArn}/*`,
+        },
+      ],
+    })
+  ),
+});
+
 const cdn = new aws.cloudfront.Distribution(
   "cdn",
   {
@@ -80,10 +101,7 @@ const cdn = new aws.cloudfront.Distribution(
         originId: bucket.arn,
         originPath: `/${prefix}`,
         s3OriginConfig: {
-          originAccessIdentity: new aws.cloudfront.OriginAccessIdentity(
-            "oai",
-            {}
-          ).cloudfrontAccessIdentityPath,
+          originAccessIdentity: oai.cloudfrontAccessIdentityPath,
         },
       },
     ],
@@ -111,4 +129,21 @@ const cdn = new aws.cloudfront.Distribution(
   {
     dependsOn: objects,
   }
+);
+
+new aws.route53.Record(
+  "gbh-a-record",
+  {
+    name: fullDomain,
+    zoneId: networkHostedZoneId,
+    type: "A",
+    aliases: [
+      {
+        name: cdn.domainName,
+        zoneId: cdn.hostedZoneId,
+        evaluateTargetHealth: true,
+      },
+    ],
+  },
+  { provider: networkProvider }
 );

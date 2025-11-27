@@ -1,1 +1,51 @@
+@font-face {
+  font-family: 'Amsterdam';
+  src: url('../src/assets/fonts/Amsterdam.ttf');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Montserrat-Light';
+  src: url('../src/assets/fonts/Montserrat-Light.ttf');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Perandory';
+  src: url('../src/assets/fonts/Perandory-Regular.ttf');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Perandory-Semi-Condensed';
+  src: url('../src/assets/fonts/Perandory-Semi-Condensed.ttf');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Perandory-Condensed';
+  src: url('../src/assets/fonts/Perandory-Condensed.ttf');
+  font-weight: 400;
+  font-style: normal;
+}
+
 @import "tailwindcss";
+@import "swiper/css/bundle";
+
+@theme {
+  --font-amsterdam: Amsterdam, "sans-serif";
+  --font-montserrat-light: Montserrat-light, "sans-serif";
+  --font-perandory: Perandory, "sans-serif";
+  --font-perandory-semi-condensed: Perandory-Semi-Condensed, "sans-serif";
+  --font-perandory-condensed: Perandory-Condensed, "sans-serif";
+  
+  --color-gbh-gold: #ae9353;
+  --color-gbh-green: #355e3b;
+  --color-gbh-cream: #fff8e9;
+  --color-gbh-black: #001616;
+  --color-gbh-white: #ffffff;
+}
