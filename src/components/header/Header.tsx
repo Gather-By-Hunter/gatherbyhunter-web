@@ -41,14 +41,14 @@ export const Header = () => {
   }, []);
 
   return (
-    <header className="bg-gbh-cream flex items-center justify-between h-20 px-12 border-t border-b border-gbh-black sticky top-0 z-50 transition-all duration-300 shadow-lg">
+    <header className="bg-gbh-cream flex items-center justify-between h-20 px-12 sticky top-0 z-50 transition-all duration-300 shadow-lg">
       <div className="flex items-center">
         <Link to="/">
           <SmallLogo
             style={{
               height: `calc(var(--spacing) * ${14 * (percentScrolled + 1)})`,
             }}
-            className={`rounded-full border border-gbh-black transition-all duration-300`}
+            className="rounded-full transition-all duration-300"
           />
         </Link>
       </div>
@@ -60,8 +60,6 @@ export const Header = () => {
         <NavLink to="/gallery">Gallery</NavLink>
         <Divider />
         <NavLink to="/about-us">About Us</NavLink>
-        <Divider />
-        <NavLink to="/about-us">Get In Touch</NavLink>
       </nav>
       <div className="flex items-center">
         <Link

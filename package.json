@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "vite",
-    "build": "tsc --noEmit && vite build && cp -r public dist/public",
+    "build": "tsc --noEmit && vite build",
     "preview": "vite preview"
   },
   "repository": {

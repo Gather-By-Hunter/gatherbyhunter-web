@@ -1,6 +1,6 @@
 import * as pulumi from "@pulumi/pulumi";
 import * as aws from "@pulumi/aws";
-import { createS3Bucket } from "./src/s3";
+import { createWebsiteBucket } from "./src/s3";
 import { uploadFiles } from "./src/uploadFiles";
 
 const config = new pulumi.Config();
@@ -26,7 +26,7 @@ const usEastProvider = new aws.Provider("us-east-1-provider", {
   region: "us-east-1",
 });
 
-const bucket = createS3Bucket(env);
+const bucket = createWebsiteBucket(env);
 
 const fullDomain = subdomain ? `${subdomain}.${domain}` : domain;
 const cert = new aws.acm.Certificate(

@@ -2,6 +2,7 @@ export interface HomePhoto {
   id: number;
   url: string;
   alt: string;
+  objectPosition?: string;
 }
 
 export class HomeStore {

@@ -1,0 +1,59 @@
+@startuml temp
+
+scale 1
+skinparam linetype ortho
+left to right direction
+
+!include <awslib/AWSCommon>
+!include <awslib/Groups/AWSCloud>
+!include <awslib/NetworkingContentDelivery/CloudFront>
+!include <awslib/Groups/Generic>
+!include <awslib/General/Users>
+!include <awslib/NetworkingContentDelivery/ElasticLoadBalancing>
+!include <awslib/Containers/ECSAnywhere>
+!include <awslib/Database/RDS>
+!include <awslib/Compute/Lambda>
+!include <awslib/Storage/SimpleStorageService>
+!include <awslib/ApplicationIntegration/SimpleQueueService>
+!include <awslib/Database/ElastiCacheElastiCacheforRedis>
+
+Users(sources, "Users", "Americas")
+
+AWSCloudGroup(cloud) {
+  CloudFront(staticWebsiteDelivery, "CloudFront", "cdn")
+  ElasticLoadBalancing(elb, "ELB", "ALB")
+  GenericGroup(servers, "Server Containers") {
+    ECSAnywhere(ecs1, "ECS1", "Rust")
+  }
+  RDS(rds, "RDS", "Postgresql")
+  GenericGroup(pinterestFlow, "Pinterest Flow") {
+    Lambda(pinterestLambda, "AWS Lambda", "Pull images")
+    SimpleQueueService(pinterestImages, "SQS", "Pinterest Images")
+    Lambda(imageLambda, "AWS Lambda", "Get embeddings")
+    rectangle AWSBedrock
+  }
+  ElastiCacheElastiCacheforRedis(redis, "Redis", "Cache")
+  SimpleStorageService(imagesBucket, "Amazon S3", "images bucket")
+}
+
+rectangle Pinterest
+
+sources --> staticWebsiteDelivery
+staticWebsiteDelivery --> elb
+staticWebsiteDelivery --> imagesBucket
+
+elb --> ecs1
+ecs1 --> rds
+ecs1 --> imagesBucket
+
+ecs1 --> pinterestLambda
+pinterestLambda --> Pinterest
+pinterestLambda --> pinterestImages
+pinterestImages --> imageLambda
+imageLambda --> AWSBedrock
+imageLambda --> redis
+
+redis --> ecs1
+
+
+@enduml

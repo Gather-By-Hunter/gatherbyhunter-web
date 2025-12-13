@@ -1,6 +1,6 @@
 import * as aws from "@pulumi/aws";
 
-export const createS3Bucket = (env: string) => {
+export const createWebsiteBucket = (env: string) => {
   const name = `gatherbyhunter-frontend-${env}`;
 
   const bucket = new aws.s3.Bucket(`${name}-bucket`, {

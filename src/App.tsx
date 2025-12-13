@@ -1,5 +1,11 @@
-import { Header } from "@components/index.ts";
-import { Collections, Home, MatchYourVibe, NotFound } from "@pages/index.ts";
+import {
+  Collections,
+  Home,
+  MatchYourVibe,
+  NotFound,
+  PinterestPrivacyPolicy,
+  PrivacyPolicy,
+} from "@pages/index.ts";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 const AppContent: React.FC = () => {
@@ -9,6 +15,11 @@ const AppContent: React.FC = () => {
         <Route path="/" element={<Home />} />
         <Route path="/collections" element={<Collections />} />
         <Route path="/match-your-vibe" element={<MatchYourVibe />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route
+          path="/pinterest/privacy-policy"
+          element={<PinterestPrivacyPolicy />}
+        />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
